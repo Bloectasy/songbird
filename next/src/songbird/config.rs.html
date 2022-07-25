@@ -479,14 +479,14 @@
 
     <span class="doccomment">/// Sets this `Config`&#39;s symphonia codec registry.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">codec_registry</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">codec_registry</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CODEC_REGISTRY</span>) -&gt; <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">codec_registry</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">codec_registry</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">CodecRegistry</span>) -&gt; <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">codec_registry</span> <span class="op">=</span> <span class="ident">codec_registry</span>;
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// Sets this `Config`&#39;s symphonia format registry/probe set.</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format_registry</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">format_registry</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">PROBE</span>) -&gt; <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">format_registry</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">format_registry</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Probe</span>) -&gt; <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">format_registry</span> <span class="op">=</span> <span class="ident">format_registry</span>;
         <span class="self">self</span>
     }
@@ -549,5 +549,5 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="songbird" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (848090dcd 2022-07-22)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="songbird" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (7fe022f5a 2022-07-24)" ></div>
 </body></html>
