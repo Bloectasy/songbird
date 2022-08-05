@@ -667,6 +667,12 @@ impl Mixer {
                 return Ok(());
             }
         } else {
+            if self.silence_frames == 0 {
+                if let Some(ws) = &self.ws {
+                    ws.send(WsMessage::Speaking(true))?;
+                }
+            }
+
             self.silence_frames = 5;
 
             if let MixType::MixedPcm(n) = mix_len {
