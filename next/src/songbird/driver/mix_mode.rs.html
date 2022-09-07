@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/driver/mix_mode.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mix_mode.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/serenity-rs/songbird/current/songbird-ico.png"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../songbird/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/serenity-rs/songbird/current/songbird.png" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../songbird/index.html"><div class="logo-container">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/driver/mix_mode.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mix_mode.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../../normalize.css"><link rel="stylesheet" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../../ayu.css" disabled><link rel="stylesheet" href="../../../dark.css" disabled><link rel="stylesheet" href="../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../storage.js"></script><script defer src="../../../source-script.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../main.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/serenity-rs/songbird/current/songbird-ico.png"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../songbird/index.html"><div class="logo-container"><img src="https://raw.githubusercontent.com/serenity-rs/songbird/current/songbird.png" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../../songbird/index.html"><div class="logo-container">
                     <img src="https://raw.githubusercontent.com/serenity-rs/songbird/current/songbird.png" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../songbird/index.html">
                         <img src="https://raw.githubusercontent.com/serenity-rs/songbird/current/songbird.png" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
@@ -59,64 +59,64 @@
 <span id="57">57</span>
 <span id="58">58</span>
 <span id="59">59</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">audiopus::Channels</span>;
-<span class="kw">use</span> <span class="ident">symphonia_core::audio::Layout</span>;
+</pre><pre class="rust"><code><span class="kw">use </span>audiopus::Channels;
+<span class="kw">use </span>symphonia_core::audio::Layout;
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::constants</span>::{<span class="ident">MONO_FRAME_SIZE</span>, <span class="ident">STEREO_FRAME_SIZE</span>};
+<span class="kw">use </span><span class="kw">crate</span>::constants::{MONO_FRAME_SIZE, STEREO_FRAME_SIZE};
 
-<span class="doccomment">/// Mixing behaviour for sent audio sources processed within the driver.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// This has no impact on Opus packet passthrough, which will pass packets</span>
-<span class="doccomment">/// irrespective of their channel count.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">MixMode</span> {
-    <span class="doccomment">/// Audio sources will be downmixed into a mono buffer.</span>
-    <span class="ident">Mono</span>,
-    <span class="doccomment">/// Audio sources will be mixed into into a stereo buffer, where mono sources</span>
-    <span class="doccomment">/// will be duplicated into both channels.</span>
-    <span class="ident">Stereo</span>,
+<span class="doccomment">/// Mixing behaviour for sent audio sources processed within the driver.
+///
+/// This has no impact on Opus packet passthrough, which will pass packets
+/// irrespective of their channel count.
+</span><span class="attribute">#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+</span><span class="kw">pub enum </span>MixMode {
+    <span class="doccomment">/// Audio sources will be downmixed into a mono buffer.
+    </span>Mono,
+    <span class="doccomment">/// Audio sources will be mixed into into a stereo buffer, where mono sources
+    /// will be duplicated into both channels.
+    </span>Stereo,
 }
 
-<span class="kw">impl</span> <span class="ident">MixMode</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">to_opus</span>(<span class="self">self</span>) -&gt; <span class="ident">Channels</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Mono</span> =&gt; <span class="ident">Channels::Mono</span>,
-            <span class="ident"><span class="self">Self</span>::Stereo</span> =&gt; <span class="ident">Channels::Stereo</span>,
+<span class="kw">impl </span>MixMode {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>to_opus(<span class="self">self</span>) -&gt; Channels {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Mono =&gt; Channels::Mono,
+            <span class="self">Self</span>::Stereo =&gt; Channels::Stereo,
         }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">sample_count_in_frame</span>(<span class="self">self</span>) -&gt; <span class="ident">usize</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Mono</span> =&gt; <span class="ident">MONO_FRAME_SIZE</span>,
-            <span class="ident"><span class="self">Self</span>::Stereo</span> =&gt; <span class="ident">STEREO_FRAME_SIZE</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>sample_count_in_frame(<span class="self">self</span>) -&gt; usize {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Mono =&gt; MONO_FRAME_SIZE,
+            <span class="self">Self</span>::Stereo =&gt; STEREO_FRAME_SIZE,
         }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">channels</span>(<span class="self">self</span>) -&gt; <span class="ident">usize</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Mono</span> =&gt; <span class="number">1</span>,
-            <span class="ident"><span class="self">Self</span>::Stereo</span> =&gt; <span class="number">2</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>channels(<span class="self">self</span>) -&gt; usize {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Mono =&gt; <span class="number">1</span>,
+            <span class="self">Self</span>::Stereo =&gt; <span class="number">2</span>,
         }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">symph_layout</span>(<span class="self">self</span>) -&gt; <span class="ident">Layout</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::Mono</span> =&gt; <span class="ident">Layout::Mono</span>,
-            <span class="ident"><span class="self">Self</span>::Stereo</span> =&gt; <span class="ident">Layout::Stereo</span>,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>symph_layout(<span class="self">self</span>) -&gt; Layout {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Mono =&gt; Layout::Mono,
+            <span class="self">Self</span>::Stereo =&gt; Layout::Stereo,
         }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">MixMode</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Layout</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">MixMode</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident">val</span>.<span class="ident">symph_layout</span>()
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">MixMode</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Channels</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">MixMode</span>) -&gt; <span class="self">Self</span> {
-        <span class="ident">val</span>.<span class="ident">to_opus</span>()
+<span class="kw">impl </span>From&lt;MixMode&gt; <span class="kw">for </span>Layout {
+    <span class="kw">fn </span>from(val: MixMode) -&gt; <span class="self">Self </span>{
+        val.symph_layout()
+    }
+}
+
+<span class="kw">impl </span>From&lt;MixMode&gt; <span class="kw">for </span>Channels {
+    <span class="kw">fn </span>from(val: MixMode) -&gt; <span class="self">Self </span>{
+        val.to_opus()
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="songbird" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (f03ce3096 2022-08-08)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="songbird" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (78a891d36 2022-09-06)" ></div></body></html>
